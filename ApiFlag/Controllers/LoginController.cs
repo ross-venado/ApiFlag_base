@@ -36,6 +36,12 @@ namespace ApiFlag.Controllers
             if (login == null)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
 
+            // Validamos el modelo.
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             //TODO: Validate credentials Correctly, this code is only for demo !!
             bool isCredentialValid = (login.Password == "123456");
             if (isCredentialValid)
