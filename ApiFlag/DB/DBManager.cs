@@ -15,6 +15,9 @@ namespace ApiFlag.DB
         public readonly static string dbflags = "dbflags";
         public readonly static string TAG_SQL = ConfigurationManager.AppSettings["TAG_SQL"].ToString();
         public readonly static string sp_transaccion = "sp_transaccion";
+        private SqlCommand query;
+
+        private SqlCommand queryStoredProc = new SqlCommand(); // se crea una nueva variable para no entorpecer el utilizado
 
         public static SqlConnection conn;
 
@@ -54,6 +57,15 @@ namespace ApiFlag.DB
                 string dbname = "dbflags";
                 string user = "sa";
                 string pass = "1";
+
+                conn = new SqlConnection(cadena(server, dbname, user, pass));
+            }
+            else if (tag== "tag_sc")
+            {
+                string server = "localhost";
+                string dbname = "dbflags";
+                string user = "devsc";
+                string pass = "Clavesecreta123!";
 
                 conn = new SqlConnection(cadena(server, dbname, user, pass));
             }
@@ -119,7 +131,105 @@ namespace ApiFlag.DB
         }
 
 
+
+        public class ParametrosStoredP
+        {
+            public string nombreParametro = string.Empty;
+            public object valorParametro;
+            public ParameterDirection direccionParametro;
+            public DbType tipoValor;
+            public ParametrosStoredP(string _nombreParametro, object _valorParametro, ParameterDirection _direccionParametro, DbType _tipoValor)
+            {
+                nombreParametro = _nombreParametro;
+                valorParametro = _valorParametro;
+                direccionParametro = _direccionParametro;
+                tipoValor = _tipoValor;
+            }
+        }
+
+
+
+
+
+
+        public  int  EjecutarStoredProc(string pmNameDB, string _nombreStoredProc, string psalida, params ParametrosStoredP[] parametros)
+        {
+            int tmpEstadoConexion = 0;
+
+            try
+            {
+
+
+                GetConnectionSQL2(currentTag);
+                conn.Open();
+                conn.ChangeDatabase(pmNameDB);
+
+
+
+                SqlCommand queryStoredProc = new SqlCommand(_nombreStoredProc, conn);
+
+
+                // regularmente...
+                // si la conexion esta cerrada entonces la abrimos...
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                    tmpEstadoConexion = 1;
+                }
+
+               // queryStoredProc.CommandText = _nombreStoredProc; // le enviamos el nombre del stored proc....
+                queryStoredProc.CommandType = CommandType.StoredProcedure; // Asignamos el tipo stored proc...
+
+                // ahora ejecutamos el query...
+                //queryStoredProc.CommandTimeout = _timeOutStoredProc;
+
+                SqlParameter tmpParametro;
+                // agregamos todos los parametros 
+                foreach (ParametrosStoredP elemento in parametros)
+                {
+                    {
+                        var withBlock = elemento;
+                        tmpParametro = new SqlParameter(withBlock.nombreParametro, withBlock.valorParametro);
+                        tmpParametro.Direction = withBlock.direccionParametro;
+                        tmpParametro.DbType = withBlock.tipoValor;
+                    }
+                    queryStoredProc.Parameters.Add(tmpParametro);
+                }
+
+
+                queryStoredProc.ExecuteNonQuery();
+
+
+                object o = queryStoredProc.Parameters[psalida].Value;
+
+                int val = int.Parse(o.ToString());
+
+
+
+                return val;
+
+            }
+            catch (Exception ex)
+            {            
+                throw new InvalidOperationException(ex.Message);
+                throw ex;
+            }
+            finally
+            {
+                // si la conexion estaba cerrada entonces la cerramos...
+                if (tmpEstadoConexion == 1)
+                    conn.Close();
+            }
+        }
+
+
+
+        private void LimpiarQueryStored_CommandText()
+        {
+            query.CommandText = string.Empty;
+        }
+
         //fin clase
     }
 
-    }
+}
