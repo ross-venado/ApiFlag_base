@@ -14,22 +14,43 @@ namespace ApiFlag.Controllers
     [RoutePrefix("api/login")]
     public class LoginController : ApiController
     {
-        [HttpGet]
-        [Route("echoping")]
-        public IHttpActionResult EchoPing()
-        {
-            return Ok(true);
-        }
-
-        [HttpGet]
-        [Route("echouser")]
-        public IHttpActionResult EchoUser()
-        {
-            var identity = Thread.CurrentPrincipal.Identity;
-            return Ok($" IPrincipal-user: {identity.Name} - IsAuthenticated: {identity.IsAuthenticated}");
-        }
+        // Modelo de respuestas personalizadas
+        
 
         [HttpPost]
+        [Route("verify")]
+        public IHttpActionResult verify(LoginRequest login)
+        {
+            ResponseModel response = UserServices.VerifyModel(login.Username, login.Password);
+            return Ok(response);
+            //return Ok(customerFake);
+        }
+
+
+    }
+}
+
+
+
+/*
+ * 
+ * ESTOS SON LOS OTROS METODO QUE NO UTILIZO HAHAHA XD
+ * [HttpGet]
+[Route("echoping")]
+public IHttpActionResult EchoPing()
+{
+    return Ok(true);
+}
+
+[HttpGet]
+[Route("echouser")]
+public IHttpActionResult EchoUser()
+{
+    var identity = Thread.CurrentPrincipal.Identity;
+    return Ok($" IPrincipal-user: {identity.Name} - IsAuthenticated: {identity.IsAuthenticated}");
+}
+
+            [HttpPost]
         [Route("authenticate")]
         public IHttpActionResult Authenticate(LoginRequest login)
         {
@@ -54,5 +75,7 @@ namespace ApiFlag.Controllers
                 return Unauthorized();
             }
         }
-    }
-}
+ 
+     
+     
+     */

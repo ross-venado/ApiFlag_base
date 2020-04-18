@@ -9,7 +9,6 @@ namespace ApiFlag.Models
     {
         public string Username { get; set; }
         public string Password { get; set; }
-        public string Recurso { get; set; }
-        public string Appautentication { get; set; }
+
     }
 }

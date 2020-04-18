@@ -21,11 +21,6 @@ namespace ApiFlag.Models
             [Required]
             public string Password { get; set; }
 
-            [Required]
-            public string Recurso { get; set; }
-
-            [Required]
-            public string Appautentication { get; set; }
         }
 
 

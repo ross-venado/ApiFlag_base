@@ -147,6 +147,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Dump DB\dbflags.sql" />
     <Content Include="Global.asax" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
@@ -163,12 +164,14 @@
     <Compile Include="Models\LoginRequest.cs" />
     <Compile Include="Models\RequestModel.cs" />
     <Compile Include="Models\ResponseModel.cs" />
+    <Compile Include="Models\usuarioModel.cs" />
     <Compile Include="Models\Validate\LoginValidation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResponseCode\CodeManager.cs" />
     <Compile Include="Services\LogService.cs" />
     <Compile Include="Services\TokenGenerator.cs" />
     <Compile Include="Services\TokenValidationHandler.cs" />
+    <Compile Include="Services\UserServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />

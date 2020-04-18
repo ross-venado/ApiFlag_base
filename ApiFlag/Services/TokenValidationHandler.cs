@@ -40,11 +40,20 @@ namespace ApiFlag.Services
         {
             HttpStatusCode statusCode;
             string token;
+            var vrlResponse = new ResponseModel();
+           
+
 
             // determine whether a jwt exists or not
             if (!TryRetrieveToken(request, out token))
             {
                 statusCode = HttpStatusCode.Unauthorized;
+                vrlResponse.RsCode = CodeManager.CODE_200;
+                vrlResponse.RsMessageForUser = CodeManager.MSG_User_200;
+                vrlResponse.RsMessage = "Se ha denegado la autorización para esta solicitud.";
+
+                vrlResponse.RsContent = statusCode;
+
                 return base.SendAsync(request, cancellationToken);
             }
 
@@ -73,16 +82,28 @@ namespace ApiFlag.Services
 
                 return base.SendAsync(request, cancellationToken);
             }
-            catch (SecurityTokenValidationException)
+            catch (SecurityTokenValidationException s)
             {
                 statusCode = HttpStatusCode.Unauthorized;
+                vrlResponse.RsCode = CodeManager.CODE_200;
+                vrlResponse.RsMessageForUser = CodeManager.MSG_User_200;
+                vrlResponse.RsMessage = s.Message;
+                vrlResponse.RsContent = statusCode;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 statusCode = HttpStatusCode.InternalServerError;
+                vrlResponse.RsCode = CodeManager.CODE_200;
+                vrlResponse.RsMessageForUser = CodeManager.MSG_User_200;
+                vrlResponse.RsMessage = e.Message;
+                vrlResponse.RsContent = statusCode;
             }
 
-            return Task<HttpResponseMessage>.Factory.StartNew(() => new HttpResponseMessage(statusCode) { });
+            return Task<HttpResponseMessage>.Factory.StartNew(() => new HttpResponseMessage(statusCode)
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(vrlResponse), System.Text.Encoding.UTF8, "application/json")
+            });
+
         }
 
         public bool LifetimeValidator(DateTime? notBefore, DateTime? expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
