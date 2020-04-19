@@ -4,6 +4,7 @@ using ApiFlag.ResponseCode;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -14,6 +15,7 @@ namespace ApiFlag.Services
     public class FlagService
     {
 
+        public static string VL_Mensaje = "";
 
 
         public static ResponseModel CreateFlag(FlagModel flag)
@@ -61,7 +63,7 @@ namespace ApiFlag.Services
 
 
 
-        public static ResponseModel UpdateFlag(FlagModel flag)
+        public static ResponseModel UpdateFlag(int id,FlagModel flag)
         {
             try
             {
@@ -71,7 +73,7 @@ namespace ApiFlag.Services
 
                 resultado = VL_BD.EjecutarStoredProc(DBManager.dbflags, "sp_transacciones_flag", "@oSalida",
                new DBManager.ParametrosStoredP("@iOperacion", "B", ParameterDirection.Input, DbType.String),
-               new DBManager.ParametrosStoredP("@iID",flag.id,ParameterDirection.Input,DbType.Int64),
+               new DBManager.ParametrosStoredP("@iID",id,ParameterDirection.Input,DbType.Int64),
                new DBManager.ParametrosStoredP("@iEstado", flag.estado, ParameterDirection.Input, DbType.Int64),
                new DBManager.ParametrosStoredP("@iDescripcion", flag.Descripcion, ParameterDirection.Input, DbType.String),
                new DBManager.ParametrosStoredP("@oSalida", 0, ParameterDirection.Output, DbType.Int64));
@@ -113,7 +115,7 @@ namespace ApiFlag.Services
 
 
 
-        public static ResponseModel DeleteFlag(FlagModel flag)
+        public static ResponseModel DeleteFlag(int id)
         {
             try
             {
@@ -123,7 +125,7 @@ namespace ApiFlag.Services
 
                 resultado = VL_BD.EjecutarStoredProc(DBManager.dbflags, "sp_transacciones_flag", "@oSalida",
                new DBManager.ParametrosStoredP("@iOperacion", "C", ParameterDirection.Input, DbType.String),               
-               new DBManager.ParametrosStoredP("@iID", flag.id, ParameterDirection.Input, DbType.Int64),
+               new DBManager.ParametrosStoredP("@iID",id, ParameterDirection.Input, DbType.Int64),
                new DBManager.ParametrosStoredP("@oSalida", 0, ParameterDirection.Output, DbType.Int64));
 
 
@@ -151,6 +153,77 @@ namespace ApiFlag.Services
             }
         }
 
+
+
+
+
+        public static ResponseModel SelectFlags(int id = 0)
+        {
+
+            try
+            {
+                DataSet dsFlags;
+
+                // Modelo de respuestas personalizadas
+                ResponseModel vrlResponse = new ResponseModel();
+                //usuarioModel jsonM = new usuarioModel();
+                var VL_BD = new DBManager(DBManager.TAG_SQL);
+
+                dsFlags = new DataSet();
+
+                if (id==0)
+                {
+                    dsFlags = VL_BD.LlenarDatasetStoredProc(DBManager.dbflags, "sp_transacciones_flag",
+                                new DBManager.ParametrosStoredP("@iOperacion", "D", ParameterDirection.Input, DbType.String),
+                                new DBManager.ParametrosStoredP("@oSalida", 0, ParameterDirection.Output, DbType.Int64));
+                }
+                else 
+                {
+                    dsFlags = VL_BD.LlenarDatasetStoredProc(DBManager.dbflags, "sp_transacciones_flag",
+                                new DBManager.ParametrosStoredP("@iOperacion", "E", ParameterDirection.Input, DbType.String),
+                                new DBManager.ParametrosStoredP("@iID", id, ParameterDirection.Input, DbType.Int64),
+                                new DBManager.ParametrosStoredP("@oSalida", 0, ParameterDirection.Output, DbType.Int64));
+                }
+
+
+
+                if (dsFlags.Tables.Count > 0 )
+                {
+                    List<FlagModel> ListaFlags = new List<FlagModel>();
+                    foreach (DataRow item in dsFlags.Tables[0].Rows)
+                    {
+                        FlagModel flag = new FlagModel();
+
+                        flag.id = int.Parse(item["flag_id"].ToString());
+                        flag.Descripcion = item["flag_desc"].ToString();
+                        flag.estado = int.Parse(item["flag_estado"].ToString());
+
+                        ListaFlags.Add(flag);
+                    }
+
+                    vrlResponse.RsCode = CodeManager.CODE_200;
+                    vrlResponse.RsMessage = CodeManager.DESC_10001;
+                    vrlResponse.RsContent = ListaFlags;
+                    
+
+
+                }
+                else
+                {
+                    vrlResponse.RsCode = CodeManager.CODE_200;
+                    vrlResponse.RsMessage = CodeManager.DESC_10001;
+                    vrlResponse.RsContent = "No existe informacion para mostrar";
+                }
+
+
+                return vrlResponse;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error: " + ex.Message.ToString());
+            }
+        }
 
 
 

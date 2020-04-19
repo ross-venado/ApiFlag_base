@@ -20,6 +20,7 @@ namespace ApiFlag.DB
         private SqlCommand queryStoredProc = new SqlCommand(); // se crea una nueva variable para no entorpecer el utilizado
 
         public static SqlConnection conn;
+        private SqlDataAdapter daDatos;
 
         string currentTag;
 
@@ -155,7 +156,7 @@ namespace ApiFlag.DB
         public  int  EjecutarStoredProc(string pmNameDB, string _nombreStoredProc, string psalida, params ParametrosStoredP[] parametros)
         {
             int tmpEstadoConexion = 0;
-
+            int val;
             try
             {
 
@@ -200,14 +201,15 @@ namespace ApiFlag.DB
                 queryStoredProc.ExecuteNonQuery();
 
 
-                object o = queryStoredProc.Parameters[psalida].Value;
+                if (psalida.Length>0)
+                {
+                    object o = queryStoredProc.Parameters[psalida].Value;
 
-                int val = int.Parse(o.ToString());
-
-
-
+                    val = int.Parse(o.ToString());
+                    
+                }
+                val = 0;
                 return val;
-
             }
             catch (Exception ex)
             {            
@@ -221,6 +223,79 @@ namespace ApiFlag.DB
                     conn.Close();
             }
         }
+
+
+
+
+        public DataSet LlenarDatasetStoredProc(string pmNameDB, string _nombreStoredProc, params ParametrosStoredP[] parametros)
+        {
+            int tmpEstadoConexion = 0;
+
+            try
+            {
+                DataSet dstemporal = new DataSet();
+
+
+
+
+                GetConnectionSQL2(currentTag);
+                conn.Open();
+                conn.ChangeDatabase(pmNameDB);
+
+
+
+                SqlCommand queryStoredProc = new SqlCommand(_nombreStoredProc, conn);
+
+
+                // si la conexion esta cerrada entonces la abrimos...
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                    tmpEstadoConexion = 1;
+                }
+
+                
+                queryStoredProc.CommandType = CommandType.StoredProcedure; // Asignamos el tipo stored proc...
+
+                
+
+                SqlParameter tmpParametro;
+                // agregamos todos los parametros 
+                foreach (ParametrosStoredP elemento in parametros)
+                {
+                    {
+                        var withBlock = elemento;
+                        tmpParametro = new SqlParameter(withBlock.nombreParametro, withBlock.valorParametro);
+                        tmpParametro.Direction = withBlock.direccionParametro;
+                        tmpParametro.DbType = withBlock.tipoValor;
+                    }
+                    queryStoredProc.Parameters.Add(tmpParametro);
+                }
+
+                // le asignamos el query de seleccion y llenamos el dataset...
+                // daDatos.SelectCommand = queryStoredProc;
+
+                daDatos = new SqlDataAdapter(queryStoredProc);
+                daDatos.Fill(dstemporal);
+
+                return dstemporal;
+            }
+            catch (Exception ex)
+            {
+
+                throw new InvalidOperationException(ex.Message);
+                throw ex;
+            }
+            finally
+            {
+                // si la conexion estaba cerrada entonces la cerramos...
+                if (tmpEstadoConexion == 1)
+                    conn.Close();
+                // LimpiarQueryStored_CommandText();
+            }
+        }
+
+
 
 
 
