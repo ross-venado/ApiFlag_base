@@ -15,7 +15,7 @@ using System.Web.Http.Cors;
 namespace ApiFlag.Controllers
 {
     [Authorize]
-    [EnableCors(origins: "http://localhost:8100", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/flag")]
     public class FlagController : ApiController
     {

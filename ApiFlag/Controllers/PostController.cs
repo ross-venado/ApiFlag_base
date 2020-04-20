@@ -12,7 +12,7 @@ namespace ApiFlag.Controllers
 {
     [Authorize]
     [RoutePrefix("Api/Post")]
-    [EnableCors(origins: "http://localhost:8100", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class PostController : ApiController
     {
         [HttpPost]
