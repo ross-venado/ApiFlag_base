@@ -12,7 +12,7 @@ using System.Web.Http.Cors;
 namespace ApiFlag.Controllers
 {
     [AllowAnonymous]
-    [EnableCors(origins: "http://localhost:8100", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/login")]
     public class LoginController : ApiController
     {
