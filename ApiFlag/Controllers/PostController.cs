@@ -6,11 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace ApiFlag.Controllers
 {
     [Authorize]
     [RoutePrefix("Api/Post")]
+    [EnableCors(origins: "http://localhost:8100", headers: "*", methods: "*")]
     public class PostController : ApiController
     {
         [HttpPost]

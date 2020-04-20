@@ -8,13 +8,14 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Http.Cors;
 
 
 
 namespace ApiFlag.Controllers
 {
     [Authorize]
-    
+    [EnableCors(origins: "http://localhost:8100", headers: "*", methods: "*")]
     [RoutePrefix("api/flag")]
     public class FlagController : ApiController
     {

@@ -141,3 +141,7 @@ D:\Proyectos Visual Studio\ApiFlag\ApiFlag\bin\es\System.Web.Http.resources.dll
 D:\Proyectos Visual Studio\ApiFlag\ApiFlag\bin\es\System.Web.Http.WebHost.resources.dll
 D:\Proyectos Visual Studio\ApiFlag\ApiFlag\obj\Debug\ApiFlag.dll
 D:\Proyectos Visual Studio\ApiFlag\ApiFlag\obj\Debug\ApiFlag.pdb
+D:\Proyectos Visual Studio\ApiFlag\ApiFlag\obj\Debug\ApiFlag.csprojResolveAssemblyReference.cache
+D:\Proyectos Visual Studio\ApiFlag\ApiFlag\bin\System.Web.Cors.dll
+D:\Proyectos Visual Studio\ApiFlag\ApiFlag\bin\System.Web.Http.Cors.dll
+D:\Proyectos Visual Studio\ApiFlag\ApiFlag\bin\System.Web.Http.Cors.xml

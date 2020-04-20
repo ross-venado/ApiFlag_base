@@ -7,10 +7,12 @@ using System.Threading;
 using System.Web.Http;
 using ApiFlag.Models;
 using ApiFlag.Services;
+using System.Web.Http.Cors;
 
 namespace ApiFlag.Controllers
 {
     [AllowAnonymous]
+    [EnableCors(origins: "http://localhost:8100", headers: "*", methods: "*")]
     [RoutePrefix("api/login")]
     public class LoginController : ApiController
     {
