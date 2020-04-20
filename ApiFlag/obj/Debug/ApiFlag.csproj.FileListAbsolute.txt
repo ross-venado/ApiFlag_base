@@ -145,3 +145,11 @@ D:\Proyectos Visual Studio\ApiFlag\ApiFlag\obj\Debug\ApiFlag.csprojResolveAssemb
 D:\Proyectos Visual Studio\ApiFlag\ApiFlag\bin\System.Web.Cors.dll
 D:\Proyectos Visual Studio\ApiFlag\ApiFlag\bin\System.Web.Http.Cors.dll
 D:\Proyectos Visual Studio\ApiFlag\ApiFlag\bin\System.Web.Http.Cors.xml
+C:\Users\Steven Coyote\Documents\Proyectos\Banderas\Codigo\ApiFlag_base\ApiFlag\bin\System.Net.Http.dll
+C:\Users\Steven Coyote\Documents\Proyectos\Banderas\Codigo\ApiFlag_base\ApiFlag\bin\System.Security.Cryptography.Algorithms.dll
+C:\Users\Steven Coyote\Documents\Proyectos\Banderas\Codigo\ApiFlag_base\ApiFlag\bin\System.Security.Cryptography.Encoding.dll
+C:\Users\Steven Coyote\Documents\Proyectos\Banderas\Codigo\ApiFlag_base\ApiFlag\bin\System.Security.Cryptography.Primitives.dll
+C:\Users\Steven Coyote\Documents\Proyectos\Banderas\Codigo\ApiFlag_base\ApiFlag\bin\System.Security.Cryptography.X509Certificates.dll
+C:\Users\Steven Coyote\Documents\Proyectos\Banderas\Codigo\ApiFlag_base\ApiFlag\bin\System.Web.Cors.dll
+C:\Users\Steven Coyote\Documents\Proyectos\Banderas\Codigo\ApiFlag_base\ApiFlag\bin\System.Web.Http.Cors.dll
+C:\Users\Steven Coyote\Documents\Proyectos\Banderas\Codigo\ApiFlag_base\ApiFlag\bin\System.Web.Http.Cors.xml
