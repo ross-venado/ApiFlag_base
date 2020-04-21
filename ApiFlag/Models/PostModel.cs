@@ -25,5 +25,10 @@ namespace ApiFlag.Models
 
         public DateTime post_ts { get; set; }
 
+        public List<ImageModel> image { get; set; }
+
+
+        
+
     }
 }

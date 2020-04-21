@@ -70,6 +70,15 @@ namespace ApiFlag.DB
 
                 conn = new SqlConnection(cadena(server, dbname, user, pass));
             }
+            else if(tag== "tag_app")
+            {
+                string server = "3.133.147.160";
+                string dbname = "dbflags";
+                string user = "usrapp";
+                string pass = "Appsecreto1!";
+
+                conn = new SqlConnection(cadena(server, dbname, user, pass));
+            }
         }
 
         /// <summary>
@@ -234,15 +243,9 @@ namespace ApiFlag.DB
             try
             {
                 DataSet dstemporal = new DataSet();
-
-
-
-
                 GetConnectionSQL2(currentTag);
                 conn.Open();
                 conn.ChangeDatabase(pmNameDB);
-
-
 
                 SqlCommand queryStoredProc = new SqlCommand(_nombreStoredProc, conn);
 
@@ -295,6 +298,49 @@ namespace ApiFlag.DB
             }
         }
 
+
+
+
+        public object EjecutarEscalar(string pmNameDB, string _squery)
+        {
+            int tmpEstadoConexion = 0;
+            try
+            {
+                GetConnectionSQL2(currentTag);
+                conn.Open();
+                conn.ChangeDatabase(pmNameDB);
+
+                // si la conexion esta cerrada entonces la abrimos...
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                    tmpEstadoConexion = 1;
+                }
+
+                object numero;
+                // traemos el dato solicitado...
+
+                SqlCommand query = new SqlCommand(_squery, conn);
+
+                // query.CommandText = _squery;
+
+                
+                numero = query.ExecuteScalar();
+                return numero;
+                // EjecutarEscalar = query.ExecuteScalar();
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(ex.Message);
+                throw ex;
+            }
+            finally
+            {
+                // si la conexion estaba cerrada entonces la cerramos...
+                if (tmpEstadoConexion == 1)
+                    conn.Close();                
+            }
+        }
 
 
 

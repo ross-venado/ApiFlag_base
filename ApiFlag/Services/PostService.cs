@@ -83,6 +83,13 @@ namespace ApiFlag.Services
             }
 
 
+
+
+
+
+
+
+
             if (dsPost.Tables.Count > 0)
             {
                 List<PostModel> ListaPosts = new List<PostModel>();
@@ -97,6 +104,49 @@ namespace ApiFlag.Services
                     post.post_latitud = item["post_latitud"].ToString();
                     post.post_longitud = item["post_longitud"].ToString();
                     post.post_estado = int.Parse(item["post_estado"].ToString());
+
+                    // post.image = item["rec_url_img"].ToString();
+
+
+
+
+
+                    DataSet dsRecursos;
+
+                    dsRecursos = new DataSet();
+
+                    dsRecursos = VL_BD.LlenarDatasetStoredProc(DBManager.dbflags, "sp_transacciones_img",
+                        new DBManager.ParametrosStoredP("@iOperacion", "B", ParameterDirection.Input, DbType.String),
+                        new DBManager.ParametrosStoredP("@iPost", post.post_id, ParameterDirection.Input, DbType.Int64));
+
+                    
+                    List<ImageModel> ListaImages = new List<ImageModel>();
+
+                    if (dsRecursos.Tables[0].Rows.Count > 0)
+                    {
+                        
+                        foreach (DataRow item2 in dsRecursos.Tables[0].Rows)
+                        {
+                            ImageModel img = new ImageModel();
+
+                            img.image_id = int.Parse(item2["rec_id"].ToString());
+                            img.url_image = item2["rec_url_img"].ToString();
+
+                            ListaImages.Add(img);
+
+                        }
+
+                    }
+
+
+
+                    post.image = ListaImages;
+
+
+
+
+
+
 
 
                     ListaPosts.Add(post);
@@ -121,6 +171,20 @@ namespace ApiFlag.Services
 
             return vrlResponse;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 }
