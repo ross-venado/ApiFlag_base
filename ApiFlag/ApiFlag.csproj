@@ -205,6 +205,7 @@
     <Compile Include="Models\FlagModel.cs" />
     <Compile Include="Models\ImageModel.cs" />
     <Compile Include="Models\LoginRequest.cs" />
+    <Compile Include="Models\PagingParameterModel.cs" />
     <Compile Include="Models\PostModel.cs" />
     <Compile Include="Models\RegisterUserModel.cs" />
     <Compile Include="Models\RequestModel.cs" />

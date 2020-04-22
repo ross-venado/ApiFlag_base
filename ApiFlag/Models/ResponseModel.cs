@@ -13,5 +13,7 @@ namespace ApiFlag.Models
         public string RsMessageForUser { get; set; }
         public object RsContent { get; set; }
 
+
+
     }
 }

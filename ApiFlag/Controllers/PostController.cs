@@ -37,9 +37,9 @@ namespace ApiFlag.Controllers
 
         [HttpGet]
         [Route("Posts")]
-        public IHttpActionResult Posts()
+        public IHttpActionResult Posts([FromUri]PagingParameterModel pagin)
         {
-            ResponseModel response = PostService.Posts();
+            ResponseModel response = PostService.Posts(pagin);
             return Ok(response);
         }
 
@@ -47,9 +47,9 @@ namespace ApiFlag.Controllers
 
         [HttpGet]
         [Route("Posts/{id:int}")]
-        public IHttpActionResult Posts(int id)
+        public IHttpActionResult Posts(int id, [FromUri]PagingParameterModel pagin)
         {
-            ResponseModel response = PostService.Posts(id);
+            ResponseModel response = PostService.Posts(pagin,id);
             return Ok(response);
         }
 

@@ -1,6 +1,7 @@
 ﻿using ApiFlag.DB;
 using ApiFlag.Models;
 using ApiFlag.ResponseCode;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -63,11 +64,12 @@ namespace ApiFlag.Services
 
 
 
-        public static ResponseModel Posts(int id = 0)
+        public static ResponseModel Posts(PagingParameterModel pagin, int id = 0)
         {
             ResponseModel vrlResponse = new ResponseModel();
             var VL_BD = new DBManager(DBManager.TAG_SQL);
 
+            
             DataSet dsPost;
 
             dsPost = new DataSet();
@@ -91,18 +93,17 @@ namespace ApiFlag.Services
 
 
 
-
-            if (dsPost.Tables.Count > 0)
+            if (dsPost.Tables[0].Rows.Count > 0)
             {
                 List<PostModel> ListaPosts = new List<PostModel>();
                 foreach (DataRow item in dsPost.Tables[0].Rows)
                 {
-                    PostModel post = new PostModel();          
+                    PostModel post = new PostModel();
                     post.post_id = int.Parse(item["post_id"].ToString());
                     post.post_mensaje = item["post_mensaje"].ToString();
                     post.id_flag = int.Parse(item["id_flag"].ToString());
                     post.id_usuario = int.Parse(item["id_usuario"].ToString());
-                    post.post_ts = DateTime.Parse( item["post_ts"].ToString());
+                    post.post_ts = DateTime.Parse(item["post_ts"].ToString());
                     post.post_latitud = item["post_latitud"].ToString();
                     post.post_longitud = item["post_longitud"].ToString();
                     post.post_estado = int.Parse(item["post_estado"].ToString());
@@ -114,29 +115,24 @@ namespace ApiFlag.Services
 
 
                     DataSet dsRecursos;
-
                     dsRecursos = new DataSet();
 
                     dsRecursos = VL_BD.LlenarDatasetStoredProc(DBManager.dbflags, "sp_transacciones_img",
                         new DBManager.ParametrosStoredP("@iOperacion", "B", ParameterDirection.Input, DbType.String),
                         new DBManager.ParametrosStoredP("@iPost", post.post_id, ParameterDirection.Input, DbType.Int64));
 
-                    
+                    // Recorremos las imagenes por cada post
                     List<ImageModel> ListaImages = new List<ImageModel>();
 
                     if (dsRecursos.Tables[0].Rows.Count > 0)
                     {
-                        
+
                         foreach (DataRow item2 in dsRecursos.Tables[0].Rows)
                         {
                             ImageModel img = new ImageModel();
 
                             img.image_id = int.Parse(item2["rec_id"].ToString());
                             img.url_image = "http://18.216.107.69/AppBanderas/ImagesUpload/" + item2["rec_url_img"].ToString();
-
-            
-
-
                             ListaImages.Add(img);
 
                         }
@@ -144,25 +140,50 @@ namespace ApiFlag.Services
                     }
 
 
-
+                    //var source = dsPost.Tables[0].AsEnumerable()
+                    // .Select(dataRow => new PostModel
+                    // {
+                    //     post_id = dataRow.Field<int>("post_id"),
+                    //     post_mensaje = dataRow.Field<string>("post_mensaje"),
+                    //     id_flag = dataRow.Field<int>("id_flag"),
+                    //     id_usuario = dataRow.Field<int>("id_usuario"),
+                    //     nombre_usuario = dataRow.Field<string>("nombre_usuario"),
+                    //     post_ts = dataRow.Field<DateTime>("post_ts"),
+                    //     post_latitud = dataRow.Field<string>("post_latitud"),
+                    //     post_longitud = dataRow.Field<string>("post_longitud"),
+                    //     post_estado = dataRow.Field<int>("post_estado")
+                    // }).ToList();
                     post.image = ListaImages;
-
-
-
-
-
-
-
 
                     ListaPosts.Add(post);
                 }
 
+
+                int count = ListaPosts.Count;
+                int CurrentPage = pagin.pageNumber;
+                int PageSize = pagin.pageSize;
+                int TotalCount = count;
+                int TotalPages = (int)Math.Ceiling(count / (double)PageSize);
+                var items = ListaPosts.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
+                var previousPage = CurrentPage > 1 ? "Yes" : "No";
+                var nextPage = CurrentPage < TotalPages ? "Yes" : "No";
+
+
+
+
+                var paginationMetadata = new
+                {
+                    totalCount = TotalCount,
+                    pageSize = PageSize,
+                    currentPage = CurrentPage,
+                    totalPages = TotalPages,
+                    previousPage,
+                    nextPage
+                };
+
                 vrlResponse.RsCode = CodeManager.CODE_200;
                 vrlResponse.RsMessage = CodeManager.DESC_10001;
-                vrlResponse.RsContent = ListaPosts;
-
-
-
+                vrlResponse.RsContent = items;
             }
             else
             {
@@ -172,6 +193,8 @@ namespace ApiFlag.Services
             }
 
 
+            
+            // HttpContext.Current.Response.Headers.Add("Paging-Headers", JsonConvert.SerializeObject(paginationMetadata));
 
 
             return vrlResponse;
