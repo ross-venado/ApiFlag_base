@@ -28,6 +28,8 @@ namespace ApiFlag.Models
             public int post_estado { get; set; }
 
             public DateTime post_ts { get; set; }
+
+            public string nombre_usuario { get; set; }
         }
     }
 }

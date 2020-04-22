@@ -17,6 +17,8 @@ namespace ApiFlag.Models
 
         public int id_usuario { get; set; }
 
+        public string nombre_usuario { get; set; }
+
         public string post_latitud { get; set; }
 
         public string post_longitud { get; set; }

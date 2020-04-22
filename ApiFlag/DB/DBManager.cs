@@ -231,8 +231,6 @@ namespace ApiFlag.DB
             }
             finally
             {
-                // si la conexion estaba cerrada entonces la cerramos...
-                if (tmpEstadoConexion == 1)
                     conn.Close();
             }
         }
@@ -295,8 +293,7 @@ namespace ApiFlag.DB
             }
             finally
             {
-                // si la conexion estaba cerrada entonces la cerramos...
-                if (tmpEstadoConexion == 1)
+                // si la conexion estaba cerrada entonces la cerramos...                
                     conn.Close();
                 // LimpiarQueryStored_CommandText();
             }
@@ -341,8 +338,6 @@ namespace ApiFlag.DB
             }
             finally
             {
-                // si la conexion estaba cerrada entonces la cerramos...
-                if (tmpEstadoConexion == 1)
                     conn.Close();                
             }
         }
@@ -401,8 +396,6 @@ namespace ApiFlag.DB
             }
             finally
             {
-                // si la conexion estaba cerrada entonces la cerramos...
-                if (tmpEstadoConexion == 1)
                     conn.Close();                
             }
         }

@@ -106,7 +106,7 @@ namespace ApiFlag.Services
                     post.post_latitud = item["post_latitud"].ToString();
                     post.post_longitud = item["post_longitud"].ToString();
                     post.post_estado = int.Parse(item["post_estado"].ToString());
-
+                    post.nombre_usuario = item["nombre_usuario"].ToString();
                     // post.image = item["rec_url_img"].ToString();
 
 
