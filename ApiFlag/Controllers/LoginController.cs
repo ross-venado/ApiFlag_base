@@ -29,6 +29,25 @@ namespace ApiFlag.Controllers
         }
 
 
+        [HttpPost]
+        [Route("RegisterExternal")]
+        public IHttpActionResult LoginFacebook(RegisterUserModel usuario)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+
+
+            ResponseModel response = UserServices.RegistrarFacebook(usuario);
+            return Ok(response);
+            //return Ok(customerFake);
+        }
+
+
+
     }
 }
 

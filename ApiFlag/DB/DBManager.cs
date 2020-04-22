@@ -215,9 +215,13 @@ namespace ApiFlag.DB
                     object o = queryStoredProc.Parameters[psalida].Value;
 
                     val = int.Parse(o.ToString());
-                    
+
                 }
-                val = 0;
+                else
+                {
+                    val = 0;
+                }
+                
                 return val;
             }
             catch (Exception ex)
@@ -310,6 +314,7 @@ namespace ApiFlag.DB
                 conn.Open();
                 conn.ChangeDatabase(pmNameDB);
 
+
                 // si la conexion esta cerrada entonces la abrimos...
                 if (conn.State == ConnectionState.Closed)
                 {
@@ -331,6 +336,66 @@ namespace ApiFlag.DB
             }
             catch (Exception ex)
             {
+                throw new InvalidOperationException(ex.Message);
+                throw ex;
+            }
+            finally
+            {
+                // si la conexion estaba cerrada entonces la cerramos...
+                if (tmpEstadoConexion == 1)
+                    conn.Close();                
+            }
+        }
+
+
+        public object EjecutarEscalarStoredProc(string pmNameDB,string _nombreStoredProc, params ParametrosStoredP[] parametros)
+        {
+            int tmpEstadoConexion = 0;
+
+            try
+            {
+                GetConnectionSQL2(currentTag);
+                conn.Open();
+                conn.ChangeDatabase(pmNameDB);
+
+                SqlCommand queryStoredProc = new SqlCommand(_nombreStoredProc, conn);
+
+                // regularmente...
+                // si la conexion esta cerrada entonces la abrimos...
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                    tmpEstadoConexion = 1;
+                }
+
+                
+                queryStoredProc.CommandType = CommandType.StoredProcedure; // Asignamos el tipo stored proc...
+
+                // ahora ejecutamos el query...
+                
+
+                SqlParameter tmpParametro;
+                // agregamos todos los parametros 
+                foreach (ParametrosStoredP elemento in parametros)
+                {
+                    {
+                        var withBlock = elemento;
+                        tmpParametro = new SqlParameter(withBlock.nombreParametro, withBlock.valorParametro);
+                        tmpParametro.Direction = withBlock.direccionParametro;
+                        tmpParametro.DbType = withBlock.tipoValor;
+                    }
+                    queryStoredProc.Parameters.Add(tmpParametro);
+                }
+                object resultado;
+
+
+                resultado = queryStoredProc.ExecuteScalar();
+
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+
                 throw new InvalidOperationException(ex.Message);
                 throw ex;
             }

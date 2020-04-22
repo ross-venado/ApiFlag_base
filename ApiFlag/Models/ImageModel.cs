@@ -12,8 +12,8 @@ namespace ApiFlag.Models
         public string url_image { get; set; }
 
 
-
         
+
 
 
     }

@@ -10,6 +10,8 @@ namespace ApiFlag.Models
 
         public int id { get; set; }
 
+        public string titulo { get; set; }
+
         public string Descripcion { get; set; }
 
         public int estado { get; set; }

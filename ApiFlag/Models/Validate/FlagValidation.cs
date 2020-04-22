@@ -16,7 +16,10 @@ namespace ApiFlag.Models
             [Required]
             public string Descripcion { get; set; }
 
-            
+            [Required]
+            public string titulo { get; set; }
+
+
             public int estado { get; set; }
 
         }

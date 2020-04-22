@@ -4,8 +4,10 @@ using ApiFlag.ResponseCode;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Hosting;
 
 namespace ApiFlag.Services
 {
@@ -130,7 +132,10 @@ namespace ApiFlag.Services
                             ImageModel img = new ImageModel();
 
                             img.image_id = int.Parse(item2["rec_id"].ToString());
-                            img.url_image = item2["rec_url_img"].ToString();
+                            img.url_image = "http://18.216.107.69/AppBanderas/ImagesUpload/" + item2["rec_url_img"].ToString();
+
+            
+
 
                             ListaImages.Add(img);
 
@@ -183,7 +188,32 @@ namespace ApiFlag.Services
 
 
 
-
+        public static string GetMappedPath(string path)
+        {
+            if (HostingEnvironment.IsHosted)
+            {
+                if (!Path.IsPathRooted(path))
+                {
+                    // We are about to call MapPath, so need to ensure that 
+                    // we do not pass an absolute path.
+                    // 
+                    // We use HostingEnvironment.MapPath, rather than 
+                    // Server.MapPath, to allow this method to be used
+                    // in application startup. Server.MapPath calls 
+                    // HostingEnvironment.MapPath internally.
+                    return HostingEnvironment.MapPath(path);
+                }
+                else
+                {
+                    return path;
+                }
+            }
+            else
+            {
+                throw new ApplicationException(
+                        "I'm not in an ASP.NET hosted environment :-(");
+            }
+        }
 
 
     }

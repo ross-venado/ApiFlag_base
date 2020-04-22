@@ -29,6 +29,7 @@ namespace ApiFlag.Services
                 resultado = VL_BD.EjecutarStoredProc(DBManager.dbflags, "sp_transacciones_flag", "@oSalida",
                new DBManager.ParametrosStoredP("@iOperacion", "A", ParameterDirection.Input, DbType.String),
                new DBManager.ParametrosStoredP("@iDescripcion", flag.Descripcion, ParameterDirection.Input, DbType.String),
+               new DBManager.ParametrosStoredP("@iTitulo", flag.titulo, ParameterDirection.Input, DbType.String),
                new DBManager.ParametrosStoredP("@oSalida",0,ParameterDirection.Output,DbType.Int64));
 
 
@@ -74,7 +75,7 @@ namespace ApiFlag.Services
                 resultado = VL_BD.EjecutarStoredProc(DBManager.dbflags, "sp_transacciones_flag", "@oSalida",
                new DBManager.ParametrosStoredP("@iOperacion", "B", ParameterDirection.Input, DbType.String),
                new DBManager.ParametrosStoredP("@iID",id,ParameterDirection.Input,DbType.Int64),
-               new DBManager.ParametrosStoredP("@iEstado", flag.estado, ParameterDirection.Input, DbType.Int64),
+               new DBManager.ParametrosStoredP("@iEstado", flag.estado, ParameterDirection.Input, DbType.Int64),               
                new DBManager.ParametrosStoredP("@iDescripcion", flag.Descripcion, ParameterDirection.Input, DbType.String),
                new DBManager.ParametrosStoredP("@oSalida", 0, ParameterDirection.Output, DbType.Int64));
 
@@ -196,6 +197,7 @@ namespace ApiFlag.Services
 
                         flag.id = int.Parse(item["flag_id"].ToString());
                         flag.Descripcion = item["flag_desc"].ToString();
+                        flag.titulo = item["flag_title"].ToString();
                         flag.estado = int.Parse(item["flag_estado"].ToString());
 
                         ListaFlags.Add(flag);

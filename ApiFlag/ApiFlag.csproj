@@ -201,16 +201,19 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ClaseJson.cs" />
     <Compile Include="Models\FlagModel.cs" />
     <Compile Include="Models\ImageModel.cs" />
     <Compile Include="Models\LoginRequest.cs" />
     <Compile Include="Models\PostModel.cs" />
+    <Compile Include="Models\RegisterUserModel.cs" />
     <Compile Include="Models\RequestModel.cs" />
     <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="Models\usuarioModel.cs" />
     <Compile Include="Models\Validate\FlagValidation.cs" />
     <Compile Include="Models\Validate\LoginValidation.cs" />
     <Compile Include="Models\Validate\PostValidation.cs" />
+    <Compile Include="Models\Validate\RegisterUserValidation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResponseCode\CodeManager.cs" />
     <Compile Include="Services\FlagService.cs" />
