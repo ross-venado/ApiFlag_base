@@ -47,7 +47,7 @@ namespace ApiFlag.Controllers
 
         [HttpGet]
         [Route("Posts/{id:int}")]
-        public IHttpActionResult Flags(int id)
+        public IHttpActionResult Posts(int id)
         {
             ResponseModel response = PostService.Posts(id);
             return Ok(response);
