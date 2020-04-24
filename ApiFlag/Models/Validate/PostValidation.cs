@@ -30,6 +30,7 @@ namespace ApiFlag.Models
             public DateTime post_ts { get; set; }
 
             public string nombre_usuario { get; set; }
+
         }
     }
 }

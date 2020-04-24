@@ -65,6 +65,7 @@ namespace ApiFlag.Services
                     pr.Sexo = renglon["usr_sexo"].ToString();
                     pr.jwt = token.ToString();
 
+                    pr.avatar = "av-1.png";
                     listprv.Add(pr);
                 }
                     

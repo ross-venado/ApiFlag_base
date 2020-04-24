@@ -14,5 +14,8 @@ namespace ApiFlag.Models
         public string Longitud { get; set; }
         public object Sexo { get; set; }
         public object jwt { get; set; }
+
+        public string avatar { get; set; } 
+
     }
 }
