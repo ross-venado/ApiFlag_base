@@ -66,7 +66,6 @@ C:\Users\Steven Coyote\Documents\Proyectos\Banderas\Codigo\ApiFlag_base\ApiFlag\
 C:\Users\Steven Coyote\Documents\Proyectos\Banderas\Codigo\ApiFlag_base\ApiFlag\bin\es\System.Net.Http.Formatting.resources.dll
 C:\Users\Steven Coyote\Documents\Proyectos\Banderas\Codigo\ApiFlag_base\ApiFlag\bin\es\System.Web.Http.resources.dll
 C:\Users\Steven Coyote\Documents\Proyectos\Banderas\Codigo\ApiFlag_base\ApiFlag\bin\es\System.Web.Http.WebHost.resources.dll
-C:\Users\Steven Coyote\Documents\Proyectos\Banderas\Codigo\ApiFlag_base\ApiFlag\obj\Debug\ApiFlag.csprojAssemblyReference.cache
 C:\Users\Steven Coyote\Documents\Proyectos\Banderas\Codigo\ApiFlag_base\ApiFlag\obj\Debug\ApiFlag.csproj.CoreCompileInputs.cache
 C:\Users\Steven Coyote\Documents\Proyectos\Banderas\Codigo\ApiFlag_base\ApiFlag\obj\Debug\ApiFlag.csproj.CopyComplete
 C:\Users\Steven Coyote\Documents\Proyectos\Banderas\Codigo\ApiFlag_base\ApiFlag\obj\Debug\ApiFlag.dll

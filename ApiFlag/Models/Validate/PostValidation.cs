@@ -31,6 +31,9 @@ namespace ApiFlag.Models
 
             public string nombre_usuario { get; set; }
 
+            public string avatar { get; set; }
+
+
         }
     }
 }

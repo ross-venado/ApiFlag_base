@@ -21,6 +21,8 @@ namespace ApiFlag.Models
 
         public string TipoLogin { get; set; }
 
+        public string avatar { get; set; }
+
 
     }
 }

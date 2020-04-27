@@ -12,7 +12,7 @@ namespace ApiFlag.Models
         public string Direccion { get; set; }
         public object Latitud { get; set; }
         public string Longitud { get; set; }
-        public object Sexo { get; set; }
+        public string Sexo { get; set; }
         public object jwt { get; set; }
 
         public string avatar { get; set; } 

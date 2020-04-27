@@ -45,7 +45,7 @@ namespace ApiFlag.Services
                 }
                 else
                 {
-                    vrlResponse.RsCode = CodeManager.CODE_200;
+                    vrlResponse.RsCode = CodeManager.CODE_100;
                     vrlResponse.RsMessage = CodeManager.DESC_10001;
                     vrlResponse.RsContent = "Ocurrio un problema";
                 }
@@ -108,6 +108,7 @@ namespace ApiFlag.Services
                     post.post_longitud = item["post_longitud"].ToString();
                     post.post_estado = int.Parse(item["post_estado"].ToString());
                     post.nombre_usuario = item["nombre_usuario"].ToString();
+                    post.avatar = item["usr_avatar"].ToString();
                     // post.image = item["rec_url_img"].ToString();
 
 
@@ -187,7 +188,7 @@ namespace ApiFlag.Services
             }
             else
             {
-                vrlResponse.RsCode = CodeManager.CODE_200;
+                vrlResponse.RsCode = CodeManager.CODE_100;
                 vrlResponse.RsMessage = CodeManager.DESC_10001;
                 vrlResponse.RsContent = "No existe informacion para mostrar";
             }

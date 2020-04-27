@@ -30,6 +30,7 @@ namespace ApiFlag.Models
         public List<ImageModel> image { get; set; }
 
 
+        public string avatar { get; set; }
 
 
 

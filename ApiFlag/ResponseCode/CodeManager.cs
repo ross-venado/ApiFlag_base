@@ -16,6 +16,7 @@ namespace ApiFlag.ResponseCode
         public HttpRequestMessage Request { get; private set; }
 
         public static readonly string CODE_200 = "200";
+        public static readonly string CODE_100 = "100";
         public static readonly string MSG_User_200 = "Error al conectar al servicio, Por favor contacte al Adminsitrador del Sistema";
 
         public static readonly string CODE_10001 = "10001";

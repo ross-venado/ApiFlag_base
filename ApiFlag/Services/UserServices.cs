@@ -65,7 +65,19 @@ namespace ApiFlag.Services
                     pr.Sexo = renglon["usr_sexo"].ToString();
                     pr.jwt = token.ToString();
 
-                    pr.avatar = "av-1.png";
+                   
+                    pr.avatar = renglon["usr_avatar"].ToString();
+
+                    if (pr.avatar == "" & pr.Sexo.ToString().ToLower() == "m")
+                    {
+                        pr.avatar = "av-1.png";
+                    }
+                    else if(pr.avatar == "" & pr.Sexo.ToString().ToLower() == "f")
+                    {
+                        pr.avatar = "av-5.png";
+                    }
+
+
                     listprv.Add(pr);
                 }
                     
@@ -76,7 +88,7 @@ namespace ApiFlag.Services
             }
             else
             {
-                vrlResponse.RsCode = CodeManager.CODE_200;
+                vrlResponse.RsCode = CodeManager.CODE_100;
                 vrlResponse.RsMessage = CodeManager.DESC_10001;
                 //vrlResponse.RsContent = '';
                 return vrlResponse;
@@ -156,10 +168,27 @@ namespace ApiFlag.Services
 
                 ExisteUsuario = Convert.ToBoolean(respuestaSQL);
 
+
+
+
+
+                
+
+                if (usuario.avatar == null & usuario.Genero.ToString().ToLower() == "m")
+                {
+                    usuario.avatar = "av-1.png";
+                }
+                else if (usuario.avatar == null & usuario.Genero.ToString().ToLower() == "f")
+                {
+                    usuario.avatar = "av-5.png";
+                }
+
+
+
                 if (ExisteUsuario)
                 {
                     //Si existe
-                    vrlResponse.RsCode = CodeManager.CODE_200;
+                    vrlResponse.RsCode = CodeManager.CODE_100;
                     vrlResponse.RsMessage = CodeManager.DESC_10001;
                     vrlResponse.RsContent = "Ya existe una cuenta registrada con ese correo.";
                 }
@@ -176,7 +205,9 @@ namespace ApiFlag.Services
                     new DBManager.ParametrosStoredP("@iCorreo", usuario.Correo, ParameterDirection.Input, DbType.String),
                     new DBManager.ParametrosStoredP("@iPassword", usuario.clave, ParameterDirection.Input, DbType.String),
                     new DBManager.ParametrosStoredP("@iToken", usuario.Token, ParameterDirection.Input, DbType.String),
-                    new DBManager.ParametrosStoredP("@iTipoLogin", usuario.TipoLogin, ParameterDirection.Input, DbType.String));
+                    new DBManager.ParametrosStoredP("@iTipoLogin", usuario.TipoLogin, ParameterDirection.Input, DbType.String),
+                    new DBManager.ParametrosStoredP("@iAvatar", usuario.avatar, ParameterDirection.Input, DbType.String));
+
 
 
 
@@ -190,7 +221,7 @@ namespace ApiFlag.Services
                     }
                     else if (resultado == 100)
                     {
-                        vrlResponse.RsCode = CodeManager.CODE_200;
+                        vrlResponse.RsCode = CodeManager.CODE_100;
                         vrlResponse.RsMessage = CodeManager.DESC_10001;
                         vrlResponse.RsContent = "Ya existe un registro con esa descripcion";
                     }

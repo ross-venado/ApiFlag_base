@@ -44,7 +44,7 @@ namespace ApiFlag.Services
                 }
                 else if (resultado ==100)
                 {
-                    vrlResponse.RsCode = CodeManager.CODE_200;
+                    vrlResponse.RsCode = CodeManager.CODE_100;
                     vrlResponse.RsMessage = CodeManager.DESC_10001;
                     vrlResponse.RsContent = "Ya existe un registro con esa descripcion";
                 }
@@ -91,7 +91,7 @@ namespace ApiFlag.Services
                 }
                 else if (resultado==200)
                 {
-                    vrlResponse.RsCode = CodeManager.CODE_200;
+                    vrlResponse.RsCode = CodeManager.CODE_100;
                     vrlResponse.RsMessage = CodeManager.DESC_10001;
                     vrlResponse.RsContent = "No existe ninguna bandera con ese ID";
                 }
@@ -141,7 +141,7 @@ namespace ApiFlag.Services
                 }
                 else if (resultado == 300)
                 {
-                    vrlResponse.RsCode = CodeManager.CODE_200;
+                    vrlResponse.RsCode = CodeManager.CODE_100;
                     vrlResponse.RsMessage = CodeManager.DESC_10001;
                     vrlResponse.RsContent = "No existe ninguna bandera con ese ID";
                 }
@@ -212,7 +212,7 @@ namespace ApiFlag.Services
                 }
                 else
                 {
-                    vrlResponse.RsCode = CodeManager.CODE_200;
+                    vrlResponse.RsCode = CodeManager.CODE_100;
                     vrlResponse.RsMessage = CodeManager.DESC_10001;
                     vrlResponse.RsContent = "No existe informacion para mostrar";
                 }
