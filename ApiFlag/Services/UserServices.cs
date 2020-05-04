@@ -64,7 +64,6 @@ namespace ApiFlag.Services
                     pr.Longitud = renglon["usr_longitud"].ToString();
                     pr.Sexo = renglon["usr_sexo"].ToString();
                     pr.jwt = token.ToString();
-
                    
                     pr.avatar = renglon["usr_avatar"].ToString();
 
@@ -76,7 +75,6 @@ namespace ApiFlag.Services
                     {
                         pr.avatar = "av-5.png";
                     }
-
 
                     listprv.Add(pr);
                 }
@@ -244,6 +242,8 @@ namespace ApiFlag.Services
         {
             return StaticUrlOauth.Replace("{{CODIGO_API}}", ConfigurationManager.AppSettings["AppId"]).Replace("{{URL_DESTINO}}", ConfigurationManager.AppSettings["UrlDestino"]);
         }
+
+
 
 
 

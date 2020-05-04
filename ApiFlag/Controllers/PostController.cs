@@ -55,5 +55,14 @@ namespace ApiFlag.Controllers
 
 
 
+        [HttpGet]
+        [Route("ValidateToken")]
+        public IHttpActionResult ValidateToken()
+        {
+            ResponseModel response = PostService.ValidaToken();
+            return Ok(response);
+        }
+
+
     }
 }

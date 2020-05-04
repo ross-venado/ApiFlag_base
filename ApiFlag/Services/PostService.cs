@@ -25,21 +25,23 @@ namespace ApiFlag.Services
                 var VL_BD = new DBManager(DBManager.TAG_SQL);
                 int resultado;
 
-                resultado = VL_BD.EjecutarStoredProc(DBManager.dbflags, "sp_transacciones_post", "",
+                resultado = VL_BD.EjecutarStoredProc(DBManager.dbflags, "sp_transacciones_post", "@oSalida",
                new DBManager.ParametrosStoredP("@iOperacion", "A", ParameterDirection.Input, DbType.String),
                new DBManager.ParametrosStoredP("@iMensaje", post.post_mensaje, ParameterDirection.Input, DbType.String),
                new DBManager.ParametrosStoredP("@iFlag", post.id_flag, ParameterDirection.Input, DbType.Int64),
                new DBManager.ParametrosStoredP("@iUsuario", post.id_usuario, ParameterDirection.Input, DbType.Int64),
                new DBManager.ParametrosStoredP("@iLatitud", post.post_latitud, ParameterDirection.Input, DbType.String),
-               new DBManager.ParametrosStoredP("@iLongitud", post.post_longitud, ParameterDirection.Input, DbType.String));
+               new DBManager.ParametrosStoredP("@iLongitud", post.post_longitud, ParameterDirection.Input, DbType.String),
+               new DBManager.ParametrosStoredP("@oSalida", 0, ParameterDirection.Output, DbType.Int64));
 
 
 
-                if (resultado == 0)
+                if (resultado != 0)
                 {
                     vrlResponse.RsCode = CodeManager.CODE_200;
                     vrlResponse.RsMessage = CodeManager.DESC_10001;
-                    vrlResponse.RsContent = "Creado correctamente";
+                    // vrlResponse.RsContent = "Creado correctamente";
+                    vrlResponse.RsContent = resultado;
 
 
                 }
@@ -77,13 +79,15 @@ namespace ApiFlag.Services
             if (id==0)
             {
                 dsPost = VL_BD.LlenarDatasetStoredProc(DBManager.dbflags, "sp_transacciones_post",
-                                       new DBManager.ParametrosStoredP("@iOperacion", "E", ParameterDirection.Input, DbType.String));
+                                       new DBManager.ParametrosStoredP("@iOperacion", "E", ParameterDirection.Input, DbType.String),
+                                       new DBManager.ParametrosStoredP("@oSalida", 0, ParameterDirection.Output, DbType.Int64));
             }
             else
             {
                 dsPost = VL_BD.LlenarDatasetStoredProc(DBManager.dbflags, "sp_transacciones_post",
                                    new DBManager.ParametrosStoredP("@iOperacion", "D", ParameterDirection.Input, DbType.String),
-                                   new DBManager.ParametrosStoredP("@iUsuario",id,ParameterDirection.Input,DbType.Int16));
+                                   new DBManager.ParametrosStoredP("@iUsuario",id,ParameterDirection.Input,DbType.Int16),
+                                   new DBManager.ParametrosStoredP("@oSalida", 0, ParameterDirection.Output, DbType.Int64));
             }
 
 
@@ -236,6 +240,33 @@ namespace ApiFlag.Services
             {
                 throw new ApplicationException(
                         "I'm not in an ASP.NET hosted environment :-(");
+            }
+        }
+
+
+
+
+        public static ResponseModel ValidaToken()
+        {
+            ResponseModel vrlResponse = new ResponseModel();
+            try
+            {
+                
+
+                vrlResponse.RsContent = true;
+
+                vrlResponse.RsCode = CodeManager.CODE_200;
+                vrlResponse.RsMessage = CodeManager.DESC_10001;
+                
+
+
+
+                return vrlResponse;
+            }
+            catch (Exception ex)
+            {
+                vrlResponse.RsContent = ex.Message.ToString();
+                throw;
             }
         }
 

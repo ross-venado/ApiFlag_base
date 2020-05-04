@@ -85,7 +85,7 @@ namespace ApiFlag.Services
             catch (SecurityTokenValidationException s)
             {
                 statusCode = HttpStatusCode.Unauthorized;
-                vrlResponse.RsCode = CodeManager.CODE_200;
+                vrlResponse.RsCode = CodeManager.CODE_100;
                 vrlResponse.RsMessageForUser = CodeManager.MSG_User_200;
                 vrlResponse.RsMessage = s.Message;
                 vrlResponse.RsContent = statusCode;
@@ -93,7 +93,7 @@ namespace ApiFlag.Services
             catch (Exception e)
             {
                 statusCode = HttpStatusCode.InternalServerError;
-                vrlResponse.RsCode = CodeManager.CODE_200;
+                vrlResponse.RsCode = CodeManager.CODE_100;
                 vrlResponse.RsMessageForUser = CodeManager.MSG_User_200;
                 vrlResponse.RsMessage = e.Message;
                 vrlResponse.RsContent = statusCode;
